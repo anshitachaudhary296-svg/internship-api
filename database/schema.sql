@@ -1,5 +1,4 @@
--- Internship API Database Schema
--- Table: internships
+
 
 DROP TABLE IF EXISTS internships;
 
@@ -17,7 +16,7 @@ CREATE TABLE IF NOT EXISTS internships (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Indexes for performance on commonly filtered fields
+
 CREATE INDEX IF NOT EXISTS idx_internships_domain ON internships(domain);
 CREATE INDEX IF NOT EXISTS idx_internships_type ON internships(type);
 CREATE INDEX IF NOT EXISTS idx_internships_location ON internships(location);

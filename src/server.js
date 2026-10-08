@@ -1,8 +1,4 @@
-/**
- * Server Entrypoint
- * 
- * Boots the HTTP server and verifies database initialization.
- */
+
 
 require('dotenv').config();
 const app = require('./app');
@@ -14,7 +10,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 async function startServer() {
   try {
-    // Ensure database table exists and is seeded if newly created
+
     await initDatabase({ seed: true, force: false });
 
     const server = app.listen(PORT, () => {
@@ -26,7 +22,7 @@ async function startServer() {
       console.log('====================================================');
     });
 
-    // Handle graceful shutdown
+
     const handleShutdown = (signal) => {
       console.log(`\n🛑 Received ${signal}. Gracefully shutting down...`);
       server.close(() => {

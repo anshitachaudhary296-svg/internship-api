@@ -1,8 +1,3 @@
-/**
- * Express Application Configuration
- * 
- * Sets up middleware, routing, CORS, logging, and error handlers.
- */
 
 const express = require('express');
 const cors = require('cors');
@@ -15,7 +10,7 @@ const { errorHandler } = require('./middlewares/errorHandler');
 
 const app = express();
 
-// 1. CORS Configuration
+
 const corsOrigin = process.env.CORS_ORIGIN || '*';
 app.use(
   cors({
@@ -25,20 +20,32 @@ app.use(
   })
 );
 
-// 2. Request Logging (skip during automated tests)
+
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-// 3. Body Parsing Middleware
+const path = require('path');
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 4. API Root & Health Check Endpoint
+
+app.use('/dashboard', express.static(path.join(__dirname, '../public')));
+
+
 app.get('/', (req, res) => {
+
+  const accept = req.headers.accept || '';
+  if (accept.includes('text/html') && !accept.includes('application/json')) {
+    return res.sendFile(path.join(__dirname, '../public/index.html'));
+  }
+
   res.status(200).json({
     success: true,
     message: 'Welcome to the Internship REST API 🚀',
+    dashboard: 'http://localhost:5000/dashboard',
     documentation: {
       endpoints: {
         list: 'GET /api/internships?page=1&limit=5',
@@ -60,13 +67,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 5. Internship Resource API Routes
 app.use('/api/internships', internshipRoutes);
 
-// 6. 404 Route Catch-all Middleware
 app.use(notFound);
 
-// 7. Centralized Error Handler
+
 app.use(errorHandler);
 
 module.exports = app;

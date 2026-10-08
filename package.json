@@ -8,7 +8,8 @@
     "dev": "nodemon src/server.js",
     "db:init": "node database/init.js --schema-only",
     "db:seed": "node database/init.js --seed",
-    "test": "node tests/run-tests.js"
+    "test": "node tests/run-tests.js",
+    "demo": "node scripts/demo.js"
   },
   "keywords": [
     "nodejs",

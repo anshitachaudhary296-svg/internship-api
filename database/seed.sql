@@ -1,6 +1,3 @@
--- Internship API Realistic Seed Data
--- 10 comprehensive internship records covering various modern tech domains
-
 INSERT INTO internships (title, company, domain, location, type, skills, description, stipend, duration) VALUES
 (
     'Full Stack Web Developer Intern',
